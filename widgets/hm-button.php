@@ -1,6 +1,8 @@
 <?php
-use \Elementor\Widget_Base as Widget_Base;
-use \Elementor\Controls_Manager as Controls_Manager;
+use \Elementor\Widget_Base;
+use \Elementor\Controls_Manager;
+use \Elementor\Group_Control_Typography;
+use \Elementor\Scheme_Typography;
 
 class Hm_Button extends Widget_Base {
 
@@ -13,7 +15,7 @@ class Hm_Button extends Widget_Base {
     }
 
 	public function get_icon() {
-        return 'fa fa-image';
+        return 'eicon-button';
     }
 
 	public function get_categories() {
@@ -185,13 +187,17 @@ class Hm_Button extends Widget_Base {
                 'type'       => Controls_Manager::DIMENSIONS,
                 'size_units' => [ 'px', 'em', '%' ],
                 'selectors'  => [
-                    '{{WRAPPER}} .hm-button'                           => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                    '{{WRAPPER}} .hm-button.hm-button--winona::after'  => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                    '{{WRAPPER}} .hm-button.hm-button--winona > span'  => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                    '{{WRAPPER}} .hm-button.hm-button--tamaya::before' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                    '{{WRAPPER}} .hm-button.hm-button--rayen::before'  => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                    '{{WRAPPER}} .hm-button.hm-button--rayen > span'   => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    '{{WRAPPER}} .hm-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
+            ]
+        );
+
+        $this->add_group_control(
+            Group_Control_Typography:: get_type(),
+            [
+            'name'     => 'hm_button_typography',
+            'scheme'   => Scheme_Typography::TYPOGRAPHY_1,
+            'selector' => '{{WRAPPER}} .hm-button',
             ]
         );
 
@@ -202,14 +208,24 @@ class Hm_Button extends Widget_Base {
         $settings = $this->get_settings_for_display();
 
         $text = $settings['button_text'];
-        $url = $settings['button_url'];
 
         $this->add_render_attribute('hm_button', [
-            'class' => 'hm-button'
+            'class' => 'hm-button',
+            'href'	=> esc_attr($settings['button_url']['url'] ),
         ]);
+
+        if( $settings['button_url']['is_external'] ) {
+            $this->add_render_attribute( 'hm_button', 'target', '_blank' );
+		}
+        
+        if( $settings['button_url']['nofollow'] ) {
+            $this->add_render_attribute( 'hm_button', 'rel', 'nofollow' );
+		}
         ?>
         <div class="hm-button-wrapper" style="width:100%;">
-            <a <?php echo $this->get_render_attribute_string( 'hm_button' ); ?> style="display:inline-block;"><?php echo esc_html($text); ?></a>
+            <a <?php echo $this->get_render_attribute_string( 'hm_button' ); ?> style="display:inline-block;">
+                <?php echo esc_html($text); ?>
+            </a>
         </div>
         <?php
     }

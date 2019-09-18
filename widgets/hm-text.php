@@ -9,11 +9,11 @@ class Hm_Text extends Widget_Base {
     }
 
 	public function get_title() {
-        return __( 'Hossni Mubarak', 'hm-elementor-demo' );
+        return __( 'HM Text', 'hm-elementor-demo' );
     }
 
 	public function get_icon() {
-        return 'fa fa-image';
+        return 'eicon-text';
     }
 
 	public function get_categories() {

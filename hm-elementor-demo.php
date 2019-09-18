@@ -61,7 +61,7 @@ final class HmElementorDemo
 	
 	public function register_new_category($manager){
 		$manager->add_category('hm-category',[
-			'title' => __('HM Category', 'hm-elementor-demo'),
+			'title' => __('Hossni Mubarak', 'hm-elementor-demo'),
 			'icon'  => 'fa fa-video'
 		]);
 	}
