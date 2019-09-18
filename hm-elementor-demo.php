@@ -57,6 +57,15 @@ final class HmElementorDemo
 
 		// Add New Widgets Category
 		add_action( 'elementor/elements/categories_registered', [ $this, 'register_new_category' ] );
+
+		// Register Widget Styles
+		add_action( 'elementor/frontend/after_enqueue_styles', [ $this, 'widget_styles' ] );
+	}
+
+	public function widget_styles() {
+
+		wp_enqueue_style( 'hm-button', plugins_url( '/assets/css/hm-button.css', __FILE__ ) );
+
 	}
 	
 	public function register_new_category($manager){
@@ -128,4 +137,5 @@ final class HmElementorDemo
 	public function includes() {}
 
 }
+
 HmElementorDemo::instance();

@@ -1,4 +1,6 @@
 <?php
+if (!defined('ABSPATH')) { exit; }
+
 use \Elementor\Widget_Base;
 use \Elementor\Controls_Manager;
 use \Elementor\Group_Control_Typography;
@@ -222,7 +224,7 @@ class Hm_Button extends Widget_Base {
             $this->add_render_attribute( 'hm_button', 'rel', 'nofollow' );
 		}
         ?>
-        <div class="hm-button-wrapper" style="width:100%;">
+        <div class="hm-button-wrapper">
             <a <?php echo $this->get_render_attribute_string( 'hm_button' ); ?> style="display:inline-block;">
                 <?php echo esc_html($text); ?>
             </a>
