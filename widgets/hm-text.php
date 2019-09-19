@@ -136,8 +136,10 @@ class Hm_Text extends Widget_Base {
         $title = $settings['title'];
         $description = $settings['description'];
         ?>
-        <h1 class="title"><?php echo esc_attr($title); ?></h1>
-        <p class="description"><?php echo wp_kses_post($description); ?></p>
+        <div class="hm-text-wrapper">
+            <h1 class="title"><?php echo esc_attr($title); ?></h1>
+            <p class="description"><?php echo wp_kses_post($description); ?></p>
+        </div>
         <?php
     }
 

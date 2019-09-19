@@ -59,13 +59,19 @@ final class HmElementorDemo
 		add_action( 'elementor/elements/categories_registered', [ $this, 'register_new_category' ] );
 
 		// Register Widget Styles
-		add_action( 'elementor/frontend/after_enqueue_styles', [ $this, 'widget_styles' ] );
+		add_action( 'elementor/frontend/after_enqueue_styles', [ $this, 'hm_elementor_styles' ] );
+		add_action( 'elementor/frontend/after_enqueue_scripts', [ $this, 'hm_elementor_scripts' ] );
 	}
 
-	public function widget_styles() {
+	public function hm_elementor_styles() {
 
 		wp_enqueue_style( 'hm-button', plugins_url( '/assets/css/hm-button.css', __FILE__ ) );
+		wp_enqueue_style( 'hm-text', plugins_url( '/assets/css/hm-text.css', __FILE__ ) );
 
+	}
+
+	public function hm_elementor_scripts() {
+		wp_enqueue_script( 'hm-button-js', plugins_url( '/assets/js/hm-button.js', __FILE__ ), ['jquery'], time(), true );
 	}
 	
 	public function register_new_category($manager){
@@ -127,10 +133,14 @@ final class HmElementorDemo
 		// Include Widget files
 		require_once( __DIR__ . '/widgets/hm-text.php' );
 		require_once( __DIR__ . '/widgets/hm-button.php' );
+		require_once( __DIR__ . '/widgets/hm-faq.php' );
+		require_once( __DIR__ . '/widgets/hm-google-map.php' );
 
 		// Register widget
 		Plugin::instance()->widgets_manager->register_widget_type( new \Hm_Text() );
 		Plugin::instance()->widgets_manager->register_widget_type( new \Hm_Button() );
+		Plugin::instance()->widgets_manager->register_widget_type( new \Hm_Faq() );
+		Plugin::instance()->widgets_manager->register_widget_type( new \Hm_Google_Map() );
 
 	}
     
